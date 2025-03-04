@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+  font-family: "Rubik", sans-serif;
+}
+/* Global Dark & Light Mode Styles */
+body {
+  @apply bg-primary text-white font-sans leading-relaxed transition-colors duration-300 dark:bg-lightPrimary dark:text-lightTextPrimary;
+}
+
+/* Buttons */
+.btn {
+  @apply px-6 py-3 rounded-full font-semibold transition duration-300;
+}
+.btn-primary {
+  @apply bg-blue-500 text-white hover:bg-blue-600 dark:bg-teal-500 dark:text-white dark:hover:bg-teal-600;
+}
+.btn-outline {
+  @apply border border-white text-white hover:bg-white hover:text-gray-900 dark:border-gray-900 dark:text-gray-900 dark:hover:bg-gray-200;
+}
+
+/* Text Colors */
+.text-primary {
+  @apply text-white dark:text-gray-900;
+}
+.text-secondary {
+  @apply text-gray-400 dark:text-gray-600;
+}
+.text-highlight {
+  @apply text-blue-400 dark:text-red-500;
+}
+
+/* Icons */
+.icon {
+  @apply text-white dark:text-gray-900 transition-colors duration-300;
+}
+
+
+/* Gradient text animation */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-text {
+  background-size: 200% auto;
+  animation: gradient 5s ease infinite;
+}
