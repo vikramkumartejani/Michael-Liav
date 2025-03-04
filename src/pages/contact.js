@@ -144,7 +144,7 @@ export default function Contact() {
       </div>
 
       <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6">
-        <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-[1200px] mx-auto">
+        <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-[1250px] mx-auto">
           {/* Header Section */}
           <motion.div variants={itemVariants} className="text-center mb-10 sm:mb-16">
             <motion.h1
