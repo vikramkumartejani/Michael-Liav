@@ -1,3 +1,4 @@
+"use client";
 import "@/styles/globals.css";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import Layout from "@/components/Layout";
