@@ -1,11 +1,21 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import { getMediumPosts } from "@/lib/fetchMedium"
-import { motion, AnimatePresence } from "framer-motion"
-import { FaSearch, FaClock, FaCalendarAlt, FaArrowRight, FaChevronDown } from "react-icons/fa"
+import { useState, useEffect, useRef } from "react";
+import { getMediumPosts } from "@/lib/fetchMedium";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FaSearch,
+  FaClock,
+  FaCalendarAlt,
+  FaArrowRight,
+  FaChevronDown,
+} from "react-icons/fa";
 
-const CustomDropdown = ({ selectedCategory, setSelectedCategory, categories }) => {
+const CustomDropdown = ({
+  selectedCategory,
+  setSelectedCategory,
+  categories,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -28,8 +38,8 @@ const CustomDropdown = ({ selectedCategory, setSelectedCategory, categories }) =
       scale: 0.95,
       transition: {
         duration: 0.15,
-        ease: "easeInOut"
-      }
+        ease: "easeInOut",
+      },
     },
     open: {
       opacity: 1,
@@ -38,9 +48,9 @@ const CustomDropdown = ({ selectedCategory, setSelectedCategory, categories }) =
       transition: {
         type: "spring",
         stiffness: 300,
-        damping: 20
-      }
-    }
+        damping: 20,
+      },
+    },
   };
 
   const itemVariants = {
@@ -48,8 +58,8 @@ const CustomDropdown = ({ selectedCategory, setSelectedCategory, categories }) =
       opacity: 0,
       x: -10,
       transition: {
-        duration: 0.1
-      }
+        duration: 0.1,
+      },
     },
     open: (custom) => ({
       opacity: 1,
@@ -58,9 +68,9 @@ const CustomDropdown = ({ selectedCategory, setSelectedCategory, categories }) =
         delay: custom * 0.05,
         type: "spring",
         stiffness: 250,
-        damping: 20
-      }
-    })
+        damping: 20,
+      },
+    }),
   };
 
   return (
@@ -94,7 +104,8 @@ const CustomDropdown = ({ selectedCategory, setSelectedCategory, categories }) =
             exit="closed"
             className="absolute z-50 w-full bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-teal-200 dark:border-teal-800/30"
             style={{
-              boxShadow: "0 10px 25px -5px rgba(20, 184, 166, 0.3), 0 8px 10px -6px rgba(20, 184, 166, 0.2)"
+              boxShadow:
+                "0 10px 25px -5px rgba(20, 184, 166, 0.3), 0 8px 10px -6px rgba(20, 184, 166, 0.2)",
             }}
           >
             <div className=" py-1">
@@ -103,15 +114,16 @@ const CustomDropdown = ({ selectedCategory, setSelectedCategory, categories }) =
                   key={category}
                   custom={index}
                   variants={itemVariants}
-                  whileHover={{ 
+                  whileHover={{
                     x: 5,
                     backgroundColor: "rgba(20, 184, 166, 0.08)",
-                    transition: { duration: 0.2 }
+                    transition: { duration: 0.2 },
                   }}
                   className={`w-full text-left px-4 py-2.5 sm:py-3 text-sm transition-all relative group
-                    ${selectedCategory === category 
-                      ? "text-teal-600 dark:text-teal-300 font-medium" 
-                      : "text-gray-700 dark:text-gray-300"
+                    ${
+                      selectedCategory === category
+                        ? "text-teal-600 dark:text-teal-300 font-medium"
+                        : "text-gray-700 dark:text-gray-300"
                     }`}
                   onClick={() => {
                     setSelectedCategory(category);
@@ -120,7 +132,7 @@ const CustomDropdown = ({ selectedCategory, setSelectedCategory, categories }) =
                 >
                   <div className="flex items-center">
                     {selectedCategory === category && (
-                      <motion.div 
+                      <motion.div
                         layoutId="activeCategory"
                         className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-teal-400 to-teal-500 dark:from-teal-500 dark:to-teal-400"
                         initial={{ opacity: 0 }}
@@ -128,11 +140,15 @@ const CustomDropdown = ({ selectedCategory, setSelectedCategory, categories }) =
                         exit={{ opacity: 0 }}
                       />
                     )}
-                    <span className={`${selectedCategory === category ? "pl-2" : "pl-3"} transition-all`}>
+                    <span
+                      className={`${
+                        selectedCategory === category ? "pl-2" : "pl-3"
+                      } transition-all`}
+                    >
                       {category}
                     </span>
                   </div>
-                  
+
                   {selectedCategory === category && (
                     <motion.div
                       layoutId="activeBg"
@@ -154,70 +170,78 @@ const CustomDropdown = ({ selectedCategory, setSelectedCategory, categories }) =
 };
 
 export async function getServerSideProps() {
-  let articles = []
+  let articles = [];
   try {
-    articles = await getMediumPosts()
+    articles = await getMediumPosts();
   } catch (error) {
-    console.error("Error fetching articles:", error)
+    console.error("Error fetching articles:", error);
   }
 
-  return { props: { articles } }
+  return { props: { articles } };
 }
 
 export default function Articles({ articles }) {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filteredArticles, setFilteredArticles] = useState(articles)
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [isLoading, setIsLoading] = useState(false)
-  const dropdownRef = useRef(null)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredArticles, setFilteredArticles] = useState(articles);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isLoading, setIsLoading] = useState(false);
+  const dropdownRef = useRef(null);
 
   // Extract unique categories from articles (if they have categories)
   const categories = [
     "All",
-    ...new Set(articles.map((article) => article.categories?.[0] || "Uncategorized").filter(Boolean)),
-  ]
+    ...new Set(
+      articles
+        .map((article) => article.categories?.[0] || "Uncategorized")
+        .filter(Boolean)
+    ),
+  ];
 
   // Filter articles based on search term and category
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
 
     // Simulate loading delay for better UX
     const timer = setTimeout(() => {
       const filtered = articles.filter((article) => {
-        const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase())
+        const matchesSearch = article.title
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
         const matchesCategory =
           selectedCategory === "All" ||
-          (article.categories && article.categories.includes(selectedCategory)) ||
-          (selectedCategory === "Uncategorized" && (!article.categories || article.categories.length === 0))
+          (article.categories &&
+            article.categories.includes(selectedCategory)) ||
+          (selectedCategory === "Uncategorized" &&
+            (!article.categories || article.categories.length === 0));
 
-        return matchesSearch && matchesCategory
-      })
+        return matchesSearch && matchesCategory;
+      });
 
-      setFilteredArticles(filtered)
-      setIsLoading(false)
-    }, 300)
+      setFilteredArticles(filtered);
+      setIsLoading(false);
+    }, 300);
 
-    return () => clearTimeout(timer)
-  }, [searchTerm, selectedCategory, articles])
+    return () => clearTimeout(timer);
+  }, [searchTerm, selectedCategory, articles]);
 
   // Estimate reading time based on content length (if available) or title length as fallback
   const getReadingTime = (article) => {
     // If we have content, calculate based on average reading speed (225 words per minute)
     if (article.content) {
-      const wordCount = article.content.split(/\s+/).length
-      const readingTime = Math.ceil(wordCount / 225)
-      return readingTime > 0 ? readingTime : 1
+      const wordCount = article.content.split(/\s+/).length;
+      const readingTime = Math.ceil(wordCount / 225);
+      return readingTime > 0 ? readingTime : 1;
     }
 
     // Fallback: estimate based on title length
-    return Math.ceil(article.title.split(/\s+/).length / 10) || 1
-  }
+    return Math.ceil(article.title.split(/\s+/).length / 10) || 1;
+  };
 
   // Format publication date
   const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "short", day: "numeric" }
-    return new Date(dateString).toLocaleDateString(undefined, options)
-  }
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   // Animation variants
   const containerVariants = {
@@ -228,7 +252,7 @@ export default function Articles({ articles }) {
         staggerChildren: 0.1,
       },
     },
-  }
+  };
 
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -243,14 +267,15 @@ export default function Articles({ articles }) {
     },
     hover: {
       y: -10,
-      boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      boxShadow:
+        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
       transition: {
         type: "spring",
         stiffness: 300,
         damping: 15,
       },
     },
-  }
+  };
 
   return (
     <div className="bg-primary text-white min-h-screen transition-colors duration-300 dark:bg-lightPrimary dark:text-lightTextPrimary">
@@ -259,13 +284,13 @@ export default function Articles({ articles }) {
         {/* Background Elements */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <motion.div
-            className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-highlight/10 to-transparent dark:from-lightHighlight/10"
+            className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#09ace3]/10 to-transparent dark:from-lightHighlight/10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5 }}
           />
           <motion.div
-            className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-highlight/20 dark:bg-lightHighlight/20 blur-3xl"
+            className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[#09ace3]/20 dark:bg-lightHighlight/20 blur-3xl"
             animate={{
               x: [0, -30, 0],
               y: [0, 30, 0],
@@ -325,7 +350,8 @@ export default function Articles({ articles }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              Explore our collection of articles about technology, design, and development.
+              Explore our collection of articles about technology, design, and
+              development.
             </motion.p>
 
             {/* Search and Filter */}
@@ -342,7 +368,7 @@ export default function Articles({ articles }) {
                   placeholder="Search articles..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-secondary/50 dark:bg-lightSecondary/50 text-textPrimary dark:text-lightTextPrimary border border-white/10 dark:border-black/10 focus:border-highlight dark:focus:border-lightHighlight outline-none transition-all text-sm sm:text-base"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-secondary/50 dark:bg-lightSecondary/50 text-textPrimary dark:text-lightTextPrimary border border-white/10 dark:border-black/10 focus:border-[#09ace3] dark:focus:border-lightHighlight outline-none transition-all text-sm sm:text-base"
                 />
               </div>
 
@@ -360,18 +386,27 @@ export default function Articles({ articles }) {
       </section>
 
       {/* Articles Grid */}
-      <section className="max-w-[1440px] w-full mx-auto px-[20px] sm:px-6 px-8 pb-16 sm:pb-20">
-        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mb-6 sm:mb-8">
+      <section className="max-w-[1440px] w-full mx-auto px-[20px] sm:px-6 md:px-8 pb-16 sm:pb-20">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="mb-6 sm:mb-8"
+        >
           <div className="flex items-center justify-between mb-4 sm:mb-6">
             <h2 className="text-lg sm:text-2xl font-bold text-textPrimary dark:text-lightTextPrimary">
               {searchTerm || selectedCategory !== "All"
-                ? `${filteredArticles.length} ${filteredArticles.length === 1 ? "Result" : "Results"}`
+                ? `${filteredArticles.length} ${
+                    filteredArticles.length === 1 ? "Result" : "Results"
+                  }`
                 : "All Articles"}
             </h2>
             {isLoading && (
               <div className="flex items-center">
-                <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full border-2 border-highlight dark:border-lightHighlight border-t-transparent animate-spin mr-2"></div>
-                <span className="text-xs sm:text-sm text-textSecondary dark:text-lightTextSecondary">Loading...</span>
+                <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full border-2 border-[#09ace3] dark:border-lightHighlight border-t-transparent animate-spin mr-2"></div>
+                <span className="text-xs sm:text-sm text-textSecondary dark:text-lightTextSecondary">
+                  Loading...
+                </span>
               </div>
             )}
           </div>
@@ -404,16 +439,17 @@ export default function Articles({ articles }) {
                           alt={article.title}
                           className="w-full h-full object-cover "
                         />
-                        {article.categories && article.categories.length > 0 && (
-                          <div className="absolute top-2 sm:top-3 left-2 sm:left-3">
-                            <span className="text-sm px-2 py-1 capitalize sm:py-1 rounded-lg bg-highlight/80 dark:bg-lightHighlight/80 text-white">
-                              {article.categories[0]}
-                            </span>
-                          </div>
-                        )}
+                        {article.categories &&
+                          article.categories.length > 0 && (
+                            <div className="absolute top-2 sm:top-3 left-2 sm:left-3">
+                              <span className="text-sm px-2 py-1 capitalize sm:py-1 rounded-lg  bg-[#09ace3]/80 dark:bg-lightHighlight/80 text-white">
+                                {article.categories[0]}
+                              </span>
+                            </div>
+                          )}
                       </div>
                     )}
-                    <div className="px-[14px] py-4 md:p-5 flex-grow flex flex-col">
+                    <div className="px-[14px] py-4 md:p-5 flex-grow  flex flex-col">
                       <h3 className="text-lg font-medium md:font-bold text-textPrimary dark:text-lightTextPrimary mb-2 line-clamp-2">
                         {article.title}
                       </h3>
@@ -427,7 +463,7 @@ export default function Articles({ articles }) {
                           {getReadingTime(article)} min read
                         </span>
                       </div>
-                      <div className="flex items-center text-highlight dark:text-lightHighlight text-base font-medium mt-auto group">
+                      <div className="flex items-center text-[#09ace3] dark:text-lightHighlight text-base font-medium mt-auto group">
                         Read more
                         <FaArrowRight className="ml-2 text-sm group-hover:translate-x-1 transition-transform" />
                       </div>
@@ -466,10 +502,10 @@ export default function Articles({ articles }) {
                 </p>
                 <button
                   onClick={() => {
-                    setSearchTerm("")
-                    setSelectedCategory("All")
+                    setSearchTerm("");
+                    setSelectedCategory("All");
                   }}
-                  className="mt-3 sm:mt-4 px-3 sm:px-4 py-1.5 sm:py-2 bg-highlight/20 dark:bg-lightHighlight/20 text-highlight dark:text-lightHighlight rounded-lg hover:bg-highlight/30 dark:hover:bg-lightHighlight/30 transition-colors text-sm"
+                  className="mt-3 sm:mt-4 px-3 sm:px-4 py-1.5 sm:py-2 bg-[#09ace3]/20 dark:bg-lightHighlight/20 text-[#09ace3] dark:text-lightHighlight rounded-lg hover:bg-[#09ace3]/30 dark:hover:bg-lightHighlight/30 transition-colors text-sm"
                 >
                   Clear filters
                 </button>
@@ -479,5 +515,5 @@ export default function Articles({ articles }) {
         </motion.div>
       </section>
     </div>
-  )
+  );
 }
