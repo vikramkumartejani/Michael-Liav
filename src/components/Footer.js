@@ -1,38 +1,38 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { FaLinkedin, FaMedium, FaGithub, FaArrowUp } from "react-icons/fa"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaLinkedin, FaMedium, FaGithub, FaArrowUp } from "react-icons/fa";
 
-const linkedinUrl = "https://www.linkedin.com/in/michael-liav-a5484b220"
-const mediumUrl = "https://medium.com/@immichaelliav"
-const githubUrl = "https://github.com/michaelliav"
+const linkedinUrl = "https://www.linkedin.com/in/michael-liav-a5484b220";
+const mediumUrl = "https://medium.com/@immichaelliav";
+const githubUrl = "https://github.com/michaelliav";
 
 export default function Footer() {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
 
   // Show button when page is scrolled down
   useEffect(() => {
     const toggleVisible = () => {
-      const scrolled = document.documentElement.scrollTop
+      const scrolled = document.documentElement.scrollTop;
       if (scrolled > 300) {
-        setVisible(true)
+        setVisible(true);
       } else {
-        setVisible(false)
+        setVisible(false);
       }
-    }
+    };
 
-    window.addEventListener("scroll", toggleVisible)
-    return () => window.removeEventListener("scroll", toggleVisible)
-  }, [])
+    window.addEventListener("scroll", toggleVisible);
+    return () => window.removeEventListener("scroll", toggleVisible);
+  }, []);
 
   // Scroll to top function
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
-    })
-  }
+    });
+  };
 
   // Animation variants
   const footerVariants = {
@@ -45,7 +45,7 @@ export default function Footer() {
         ease: "easeOut",
       },
     },
-  }
+  };
 
   const socialIconVariants = {
     initial: { y: 0, opacity: 1 },
@@ -58,7 +58,7 @@ export default function Footer() {
         damping: 10,
       },
     },
-  }
+  };
 
   const arrowVariants = {
     initial: { scale: 1 },
@@ -70,14 +70,14 @@ export default function Footer() {
         damping: 10,
       },
     },
-  }
+  };
 
   return (
     <motion.footer
       initial="hidden"
       animate="visible"
       variants={footerVariants}
-      className="relative bg-primary text-white py-6 mt-16 transition-colors duration-300 dark:bg-lightPrimary dark:text-lightTextPrimary border-t border-gray-800/30 dark:border-gray-200/10"
+      className="relative  text-white py-6 mt-16 transition-colors duration-300 dark:bg-lightPrimary dark:text-lightTextPrimary border-t border-gray-800/30 dark:border-gray-200/10"
     >
       <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center px-4 sm:px-6 lg:px-8">
         {/* Copyright */}
@@ -87,7 +87,9 @@ export default function Footer() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          <p className="text-sm font-medium text-textPrimary dark:text-lightTextPrimary mb-1">Michael Liav</p>
+          <p className="text-sm font-medium text-textPrimary dark:text-lightTextPrimary mb-1">
+            Michael Liav
+          </p>
           <p className="text-sm text-textSecondary dark:text-lightTextSecondary">
             © {new Date().getFullYear()} All rights reserved.
           </p>
@@ -157,6 +159,5 @@ export default function Footer() {
         )}
       </AnimatePresence>
     </motion.footer>
-  )
+  );
 }
-

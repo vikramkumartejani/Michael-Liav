@@ -1,5 +1,6 @@
 "use client";
 
+import { useTheme } from "@/contexts/ThemeContext";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -109,6 +110,7 @@ const LiquidCard = ({ icon: Icon, name, index }) => {
 
 export default function About() {
   const [isVisible, setIsVisible] = useState({});
+  const { theme } = useTheme();
 
   // Observer for scroll animations
   useEffect(() => {
@@ -184,14 +186,14 @@ export default function About() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-primary text-textPrimary transition-colors duration-300 dark:bg-lightPrimary dark:text-lightTextPrimary overflow-hidden">
+    <div className="relative min-h-screen  text-textPrimary transition-colors duration-300 dark:bg-lightPrimary dark:text-lightTextPrimary overflow-hidden pt-16">
       {/* Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-[#09ace3]/10 dark:bg-lightHighlight/10 blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-accent/10 dark:bg-lightAccent/10 blur-3xl"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -200,18 +202,20 @@ export default function About() {
           className="text-center mb-16 sm:mb-24"
         >
           <motion.h1
-            className="text-4xl sm:text-6xl font-extrabold text-[#09ace3] dark:text-lightHighlight pb-2"
+            className="text-4xl sm:text-6xl font-extrabold  pb-2"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
+            style={{ color: theme.accent }}
           >
             Know Who I Am
           </motion.h1>
           <motion.div
-            className="h-1 w-24 bg-[#09ace3] dark:bg-lightHighlight mx-auto mt-4 rounded-full"
+            className="h-1 w-24 mx-auto mt-4 rounded-full"
             initial={{ width: 0 }}
             animate={{ width: 96 }}
             transition={{ duration: 1, delay: 0.5 }}
+            style={{ color: theme.accent }}
           />
         </motion.div>
 
@@ -248,21 +252,24 @@ export default function About() {
             {/* Text Content */}
             <motion.div variants={itemVariants} className="w-full lg:w-3/5">
               <motion.div className="space-y-6">
-                <motion.h2 className="text-3xl sm:text-4xl font-bold">
+                <motion.h2 className="text-3xl sm:text-4xl font-bold text-white/90">
                   Hi Everyone, I am{" "}
-                  <span className="text-[#09ace3] dark:text-lightHighlight">
-                    Michael Liav
-                  </span>
-                  .
+                  <span style={{ color: theme.accent }}>Michael Liav</span>.
                 </motion.h2>
 
                 <motion.p className="text-lg text-textSecondary dark:text-lightTextSecondary leading-relaxed">
                   I am a{" "}
-                  <span className="text-[#09ace3] dark:text-lightHighlight font-semibold">
+                  <span
+                    style={{ color: theme.accent }}
+                    className=" font-semibold"
+                  >
                     Platform Engineering Tech Lead
                   </span>{" "}
                   with expertise in{" "}
-                  <span className="text-[#09ace3] dark:text-lightHighlight font-semibold">
+                  <span
+                    style={{ color: theme.accent }}
+                    className=" font-semibold"
+                  >
                     Internal Developer Portals, Cloud-Native Technologies,
                     Automation, and Infrastructure Scalability
                   </span>
@@ -276,34 +283,52 @@ export default function About() {
                   </h3>
                   <ul className="space-y-4">
                     <li className="flex items-start">
-                      <span className="text-[#09ace3] dark:text-lightHighlight mr-3 text-xl">
+                      <span
+                        style={{ color: theme.accent }}
+                        className=" mr-3 text-xl"
+                      >
                         ✦
                       </span>
                       <span>
                         Writing tech articles on{" "}
-                        <span className="text-[#09ace3] dark:text-lightHighlight font-medium">
+                        <span
+                          style={{ color: theme.accent }}
+                          className=" font-medium"
+                        >
                           LinkedIn & Medium
                         </span>
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <span className="text-[#09ace3] dark:text-lightHighlight mr-3 text-xl">
+                      <span
+                        style={{ color: theme.accent }}
+                        className=" mr-3 text-xl"
+                      >
                         ✦
                       </span>
                       <span>
                         Mentoring engineers and{" "}
-                        <span className="text-[#09ace3] dark:text-lightHighlight font-medium">
+                        <span
+                          style={{ color: theme.accent }}
+                          className=" font-medium"
+                        >
                           giving talks on DevOps & platform engineering
                         </span>
                       </span>
                     </li>
                     <li className="flex items-start">
-                      <span className="text-[#09ace3] dark:text-lightHighlight mr-3 text-xl">
+                      <span
+                        style={{ color: theme.accent }}
+                        className=" mr-3 text-xl"
+                      >
                         ✦
                       </span>
                       <span>
                         Contributing to{" "}
-                        <span className="text-[#09ace3] dark:text-lightHighlight font-medium">
+                        <span
+                          style={{ color: theme.accent }}
+                          className=" font-medium"
+                        >
                           open-source projects
                         </span>
                       </span>
@@ -314,13 +339,15 @@ export default function About() {
                 <motion.div className="flex flex-wrap gap-3">
                   <a
                     href="/contact"
-                    className="px-4 h-[50px] flex items-center justify-center bg-[#09ace3] dark:bg-lightHighlight text-textPrimary dark:text-lightPrimary rounded-lg font-medium hover:bg-opacity-90 transition-all transform hover:scale-105"
+                    style={{ backgroundColor: theme.accent }}
+                    className="px-4 h-[50px] flex items-center justify-center  text-textPrimary dark:text-lightPrimary rounded-lg font-medium hover:bg-opacity-90 transition-all transform hover:scale-105"
                   >
                     Contact Me
                   </a>
                   <a
                     href="#"
-                    className="px-4 h-[50px] flex items-center justify-center border-2 border-[#09ace3] dark:border-lightHighlight text-[#09ace3] dark:text-lightHighlight rounded-lg font-medium hover:bg-[#09ace3]/10 dark:hover:bg-lightHighlight/10 transition-all transform hover:scale-105"
+                    style={{ color: theme.accent, border: theme.accent }}
+                    className="px-4 h-[50px] flex items-center justify-center  rounded-lg font-medium  transition-all transform hover:scale-105"
                   >
                     Download Resume
                   </a>
@@ -340,7 +367,8 @@ export default function About() {
           >
             <motion.h2
               variants={itemVariants}
-              className="text-3xl sm:text-4xl font-bold text-[#09ace3] dark:text-lightHighlight mb-4"
+              style={{ color: theme.accent }}
+              className="text-3xl sm:text-4xl font-bold  mb-4"
             >
               Professional Skillset
             </motion.h2>
@@ -379,7 +407,8 @@ export default function About() {
           >
             <motion.h2
               variants={itemVariants}
-              className="text-3xl sm:text-4xl font-bold text-[#09ace3] dark:text-lightHighlight mb-4"
+              style={{ color: theme.accent }}
+              className="text-3xl sm:text-4xl font-bold  mb-4"
             >
               Tools I Use
             </motion.h2>
@@ -417,7 +446,8 @@ export default function About() {
           >
             <motion.h2
               variants={itemVariants}
-              className="text-3xl sm:text-4xl font-bold text-[#09ace3] dark:text-lightHighlight mb-6"
+              style={{ color: theme.accent }}
+              className="text-3xl sm:text-4xl font-bold  mb-6"
             >
               Let's Connect
             </motion.h2>
@@ -436,6 +466,7 @@ export default function About() {
                 {
                   icon: FaLinkedin,
                   name: "LinkedIn",
+
                   bgColor: "bg-[#09ace3] dark:bg-lightHighlight",
                 },
                 {

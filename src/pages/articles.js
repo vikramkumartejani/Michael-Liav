@@ -10,12 +10,15 @@ import {
   FaArrowRight,
   FaChevronDown,
 } from "react-icons/fa";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const CustomDropdown = ({
   selectedCategory,
   setSelectedCategory,
   categories,
 }) => {
+  const { theme } = useTheme();
+
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -78,7 +81,8 @@ const CustomDropdown = ({
       {/* Dropdown Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-2.5 sm:py-3 rounded-lg bg-gradient-to-r from-teal-400/90 to-teal-500/90 dark:from-teal-500/90 dark:to-teal-600/90 text-white shadow-md hover:shadow-lg border border-teal-300/30 dark:border-teal-600/30 outline-none transition-all flex items-center justify-between group"
+        style={{ backgroundColor: theme.accent }}
+        className="w-full px-4 py-2.5 sm:py-3 rounded-lg  text-white shadow-md hover:shadow-lg border border-teal-300/30 dark:border-teal-600/30 outline-none transition-all flex items-center justify-between group"
         whileHover={{ scale: 1.02, y: -2 }}
         whileTap={{ scale: 0.98 }}
       >
@@ -181,6 +185,8 @@ export async function getServerSideProps() {
 }
 
 export default function Articles({ articles }) {
+  const { theme } = useTheme();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredArticles, setFilteredArticles] = useState(articles);
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -278,7 +284,7 @@ export default function Articles({ articles }) {
   };
 
   return (
-    <div className="bg-primary text-white min-h-screen transition-colors duration-300 dark:bg-lightPrimary dark:text-lightTextPrimary">
+    <div className=" text-white min-h-screen transition-colors duration-300 dark:bg-lightPrimary dark:text-lightTextPrimary">
       {/* Hero Section with Background */}
       <section className="relative py-12 sm:py-16 md:py-24 overflow-hidden">
         {/* Background Elements */}
@@ -334,12 +340,13 @@ export default function Articles({ articles }) {
                 repeat: Number.POSITIVE_INFINITY,
                 repeatType: "reverse",
               }}
-              style={{
-                backgroundImage: "linear-gradient(90deg, #24c6dc, #5BB6AF)",
-                backgroundSize: "200%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
+              // style={{
+              //   backgroundImage: "linear-gradient(90deg, #24c6dc, #5BB6AF)",
+              //   backgroundSize: "200%",
+              //   WebkitBackgroundClip: "text",
+              //   WebkitTextFillColor: "transparent",
+              // }}
+              style={{ color: theme.accent }}
             >
               Latest Articles
             </motion.h1>
@@ -463,7 +470,10 @@ export default function Articles({ articles }) {
                           {getReadingTime(article)} min read
                         </span>
                       </div>
-                      <div className="flex items-center text-[#09ace3] dark:text-lightHighlight text-base font-medium mt-auto group">
+                      <div
+                        style={{ color: theme.accent }}
+                        className="flex items-center text-base font-medium mt-auto group"
+                      >
                         Read more
                         <FaArrowRight className="ml-2 text-sm group-hover:translate-x-1 transition-transform" />
                       </div>

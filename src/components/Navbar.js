@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiSun, FiMoon, FiMenu, FiX } from "react-icons/fi";
+import { FiMenu, FiX } from "react-icons/fi";
 import { FaHome, FaFileAlt, FaEnvelope, FaChevronRight } from "react-icons/fa";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Navbar() {
-  const [theme, setTheme] = useState("dark");
+  const { theme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("/");
@@ -27,23 +28,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Initialize theme from localStorage
+  // Initialize active link
   useEffect(() => {
-    // Set active link based on current path
     setActiveLink(window.location.pathname);
-
-    const storedTheme = localStorage.getItem("theme") || "dark";
-    setTheme(storedTheme);
-    document.documentElement.classList.toggle("dark", storedTheme === "dark");
   }, []);
-
-  // Toggle between dark and light themes
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
-  };
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -107,18 +95,23 @@ export default function Navbar() {
       </AnimatePresence>
 
       {/* Main Navbar */}
-      <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          scrolled
-            ? "py-5 backdrop-blur-md bg-primary/90 dark:bg-lightPrimary/90 shadow-lg"
-            : "py-6 bg-transparent"
+      <motion.nav
+        style={{
+          backgroundColor: scrolled ? theme.navBackground : "transparent",
+          color: theme.navText,
+        }}
+        className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${
+          scrolled ? "py-4 shadow-lg backdrop-blur-md" : "py-6"
         }`}
       >
         <div className="max-w-[1440px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo with Name */}
           <Link href="/" className="group relative z-50">
             <div className="flex items-center space-x-3">
-              <div className="relative overflow-hidden rounded-full border-2 border-highlight dark:border-lightHighlight transition-all duration-300 group-hover:scale-110">
+              <div
+                className="relative overflow-hidden rounded-full border-2 transition-all duration-300 group-hover:scale-110"
+                style={{ borderColor: theme.accent }}
+              >
                 <Image
                   src="/cartoon_me.webp"
                   alt="Michael Liav Logo"
@@ -128,13 +121,10 @@ export default function Navbar() {
                 />
               </div>
               <span
-                className={`text-2xl md:text-3xl font-extrabold tracking-wide transition-all duration-300
-                ${
-                  scrolled
-                    ? "text-textPrimary dark:text-lightTextPrimary"
-                    : "text-white dark:text-lightTextPrimary"
-                }
-                group-hover:text-highlight dark:group-hover:text-lightHighlight`}
+                className="text-2xl md:text-3xl font-extrabold tracking-wide transition-all duration-300"
+                style={{
+                  color: theme.navText,
+                }}
               >
                 Michael Liav
               </span>
@@ -143,9 +133,13 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden relative z-50 menu-button p-2 rounded-full bg-highlight/20 dark:bg-lightHighlight/20 text-highlight dark:text-lightHighlight"
+            className="lg:hidden relative z-50 menu-button p-2 rounded-full transition-colors duration-300"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
+            style={{
+              backgroundColor: `${theme.accent}20`,
+              color: theme.accent,
+            }}
           >
             {menuOpen ? (
               <FiX className="text-2xl" />
@@ -156,25 +150,25 @@ export default function Navbar() {
 
           {/* Desktop Navigation Menu */}
           <div className="hidden lg:flex items-center space-x-8">
-            <ul className="flex space-x-8 uppercase text-base font-semibold tracking-wide">
+            <ul className="flex space-x-8 uppercase mr-9 text-base font-semibold tracking-wide">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`flex items-center space-x-2 py-2 px-3 rounded-lg transition-all duration-300 relative
-                      ${
-                        activeLink === link.href
-                          ? "text-highlight dark:text-lightHighlight"
-                          : "text-textPrimary dark:text-lightTextPrimary hover:text-highlight dark:hover:text-lightHighlight"
-                      }`}
+                    className="flex items-center space-x-2 py-2 px-3 rounded-lg transition-all duration-300 relative nav-link"
                     onClick={() => setActiveLink(link.href)}
+                    style={{
+                      color:
+                        activeLink === link.href ? theme.accent : theme.navText,
+                    }}
                   >
                     {link.icon}
                     <span>{link.label}</span>
                     {activeLink === link.href && (
                       <motion.span
                         layoutId="activeIndicator"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-highlight dark:bg-lightHighlight"
+                        className="absolute bottom-0 left-0 right-0 h-0.5"
+                        style={{ backgroundColor: theme.accent }}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
@@ -184,24 +178,11 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
-
-            {/* Theme Toggle Button */}
-            <button
-              onClick={toggleTheme}
-              className="p-3 rounded-full bg-secondary/80 dark:bg-lightSecondary/80 text-textPrimary dark:text-lightTextPrimary hover:bg-highlight/20 dark:hover:bg-lightHighlight/20 transition-all duration-300 hover:scale-110"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <FiSun className="text-accent text-xl" />
-              ) : (
-                <FiMoon className="text-lightHighlight text-xl" />
-              )}
-            </button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
-      {/* Mobile Navigation Menu (Slide-in Sidebar) */}
+      {/* Mobile Navigation Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -209,11 +190,15 @@ export default function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-primary dark:bg-lightPrimary z-50 shadow-2xl mobile-menu overflow-y-auto"
+            className="fixed top-0 right-0 h-full w-4/5 max-w-sm shadow-2xl mobile-menu overflow-y-auto z-50"
+            style={{ backgroundColor: theme.navBackground }}
           >
             <div className="flex flex-col h-full">
               {/* Mobile Menu Header */}
-              <div className="flex items-center justify-between px-4 py-6 sm:p-6 border-b border-gray-700 dark:border-gray-200">
+              <div
+                className="flex items-center justify-between px-4 py-6 sm:p-6 border-b"
+                style={{ borderColor: theme.borderColor }}
+              >
                 <Link href="/" onClick={() => setMenuOpen(false)}>
                   <div className="flex items-center space-x-3">
                     <Image
@@ -223,14 +208,21 @@ export default function Navbar() {
                       height={40}
                       className="rounded-full"
                     />
-                    <span className="text-xl font-bold text-textPrimary dark:text-lightTextPrimary">
+                    <span
+                      className="text-xl font-bold"
+                      style={{ color: theme.navText }}
+                    >
                       Michael Liav
                     </span>
                   </div>
                 </Link>
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="p-2 rounded-full bg-secondary dark:bg-lightSecondary text-textPrimary dark:text-lightTextPrimary"
+                  className="p-2 rounded-full"
+                  style={{
+                    backgroundColor: theme.cardBackground,
+                    color: theme.navText,
+                  }}
                   aria-label="Close menu"
                 >
                   <FiX className="text-xl" />
@@ -249,54 +241,37 @@ export default function Navbar() {
                     >
                       <Link
                         href={link.href}
-                        className={`flex items-center justify-between p-4 rounded-lg transition-all duration-300
-                          ${
+                        className="flex items-center space-x-4 px-4 py-3 rounded-lg transition-all duration-300"
+                        style={{
+                          backgroundColor:
                             activeLink === link.href
-                              ? "bg-highlight/20 dark:bg-lightHighlight/20 text-highlight dark:text-lightHighlight"
-                              : "text-textPrimary dark:text-lightTextPrimary hover:bg-secondary dark:hover:bg-lightSecondary"
-                          }`}
+                              ? `${theme.accent}20`
+                              : "transparent",
+                          color:
+                            activeLink === link.href
+                              ? theme.accent
+                              : theme.navText,
+                        }}
                         onClick={() => {
                           setActiveLink(link.href);
                           setMenuOpen(false);
                         }}
                       >
-                        <div className="flex items-center space-x-3">
-                          {link.icon}
-                          <span className="text-lg font-medium">
-                            {link.label}
-                          </span>
-                        </div>
-                        <FaChevronRight
-                          className={`transition-transform ${
-                            activeLink === link.href
-                              ? "text-highlight dark:text-lightHighlight"
-                              : ""
-                          }`}
-                        />
+                        {link.icon}
+                        <span className="font-medium">{link.label}</span>
+                        <motion.div
+                          className="ml-auto"
+                          animate={{
+                            x: activeLink === link.href ? 0 : -10,
+                            opacity: activeLink === link.href ? 1 : 0,
+                          }}
+                        >
+                          <FaChevronRight />
+                        </motion.div>
                       </Link>
                     </motion.li>
                   ))}
                 </ul>
-              </div>
-
-              {/* Mobile Menu Footer */}
-              <div className="p-6 border-t border-gray-700 dark:border-gray-200">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-textSecondary dark:text-lightTextSecondary">
-                    Switch Theme
-                  </span>
-                  <button
-                    onClick={toggleTheme}
-                    className="p-3 rounded-full bg-secondary dark:bg-lightSecondary text-textPrimary dark:text-lightTextPrimary"
-                    aria-label="Toggle theme"
-                  >
-                    {theme === "dark" ? (
-                      <FiSun className="text-accent text-xl" />
-                    ) : (
-                      <FiMoon className="text-lightHighlight text-xl" />
-                    )}
-                  </button>
-                </div>
               </div>
             </div>
           </motion.div>

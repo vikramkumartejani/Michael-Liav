@@ -1,7 +1,26 @@
 import "@/styles/globals.css";
+import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import Layout from "@/components/Layout";
 import { useState, useEffect } from "react";
 import Loader from "@/components/Loader";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import ThemeSelector from "@/components/ThemeSelector";
+
+// Font configurations
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+});
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
@@ -25,8 +44,14 @@ export default function App({ Component, pageProps }) {
   }
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <ThemeProvider>
+      <main
+        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans`}
+      >
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </main>
+    </ThemeProvider>
   );
 }
