@@ -4,7 +4,6 @@ import Layout from "@/components/Layout";
 import { useState, useEffect } from "react";
 import Loader from "@/components/Loader";
 import { ThemeProvider } from "@/contexts/ThemeContext";
-import ThemeSelector from "@/components/ThemeSelector";
 
 // Font configurations
 const inter = Inter({

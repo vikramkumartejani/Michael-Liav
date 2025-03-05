@@ -3,8 +3,13 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { FaGithub, FaLinkedin, FaMedium } from "react-icons/fa";
 import { useTheme } from "@/contexts/ThemeContext";
+import {
+  VerticalTimeline,
+  VerticalTimelineElement,
+} from "react-vertical-timeline-component";
+import "react-vertical-timeline-component/style.min.css";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const { theme } = useTheme();
@@ -17,6 +22,59 @@ export default function Home() {
     duration: Math.random() * 6 + 4,
   }));
 
+  const experiences = [
+    {
+      title: "Platform Engineering Tech Lead",
+      company_name: "Cloud-Native Solutions",
+      icon: "/icons/google.png", // You can add a specific icon if available
+      iconBg: "#FFF",
+      date: "USA & EUROPE (2016-2023)",
+      points: [
+        "Led platform engineering initiatives focusing on <strong>Internal Developer Portals</strong> and <strong>Cloud-Native Technologies</strong>",
+        "Designed and implemented scalable infrastructure solutions using <strong>AWS, Kubernetes, and Docker</strong>",
+        "Developed automation strategies to enhance developer productivity and reduce operational overhead",
+        "Mentored engineering teams in DevOps practices and platform engineering methodologies",
+        "Contributed to open-source projects and spoke at tech conferences on platform engineering trends",
+        "Implemented <strong>Backstage.io</strong> for centralized developer workflows and improved internal tooling",
+        "Created comprehensive CI/CD pipelines using <strong>ArgoCD and Terraform</strong>",
+        "Reduced infrastructure deployment time by 60% through strategic automation",
+      ],
+    },
+    {
+      title: "Technical Writer & Community Mentor",
+      company_name: "Tech Community Engagement",
+      icon: "/icons/google.png", // You can add a specific icon if available
+      iconBg: "#FFF",
+      date: "USA & EUROPE (2020-2023)",
+      points: [
+        "Authored technical articles on <strong>LinkedIn and Medium</strong> about platform engineering and cloud technologies",
+        "Provided mentorship to junior engineers, focusing on career development and technical skills",
+        "Delivered talks and workshops on <strong>DevOps, Platform Engineering, and Infrastructure Scalability</strong>",
+        "Built and maintained a professional network of technology professionals across multiple domains",
+        "Actively participated in technology communities and knowledge-sharing platforms",
+        "Created educational content reaching over <strong>50,000 tech professionals</strong>",
+        "Developed comprehensive guides on cloud-native architecture and microservices",
+        "Consulted with startups on building scalable technology infrastructure",
+      ],
+    },
+    {
+      title: "Software Development Specialist",
+      company_name: "Innovative Tech Solutions",
+      icon: "/icons/google.png", // You can add a specific icon if available
+      iconBg: "#FFF",
+      date: "USA & EUROPE (2014-2016)",
+      points: [
+        "Specialized in developing <strong>Python and JavaScript applications</strong>",
+        "Worked on complex web applications and backend systems",
+        "Implemented microservices architecture using modern frameworks",
+        "Collaborated with cross-functional teams to deliver high-performance software solutions",
+        "Developed machine learning pipelines and data processing systems",
+        "Integrated advanced security protocols in software development",
+        "Optimized application performance and reduced resource consumption",
+        "Conducted code reviews and mentored junior developers in best practices",
+      ],
+    },
+  ];
   return (
     <div className="min-h-screen">
       {/* Animated background particles */}
@@ -41,7 +99,7 @@ export default function Home() {
             }}
             transition={{
               duration: particle.duration,
-              repeat: Infinity,
+              repeat: Number.POSITIVE_INFINITY,
               ease: "linear",
             }}
           />
@@ -108,7 +166,7 @@ export default function Home() {
                 animate={{ y: [-10, 10] }}
                 transition={{
                   duration: 2,
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   repeatType: "reverse",
                   ease: "easeInOut",
                 }}
@@ -132,7 +190,7 @@ export default function Home() {
                 }}
                 transition={{
                   duration: 3,
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   repeatType: "reverse",
                   ease: "easeInOut",
                 }}
@@ -181,7 +239,7 @@ export default function Home() {
                   animate={{ rotate: [0, 5, -5, 0] }}
                   transition={{
                     duration: 6,
-                    repeat: Infinity,
+                    repeat: Number.POSITIVE_INFINITY,
                     repeatType: "reverse",
                     ease: "easeInOut",
                   }}
@@ -205,7 +263,7 @@ export default function Home() {
                   }}
                   transition={{
                     duration: 4,
-                    repeat: Infinity,
+                    repeat: Number.POSITIVE_INFINITY,
                     repeatType: "reverse",
                     ease: "easeInOut",
                   }}
@@ -215,48 +273,109 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Social Links */}
-        <motion.div
-          className="mt-16 text-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
+        {/* Experience Timeline Section */}
+        <div
+          id="experience"
+          className="mt-20 max-w-[1440px] mx-auto px-6 md:px-8"
         >
-          <h3 className="text-2xl font-display font-bold mb-4">Find Me On</h3>
-          <p className="text-white/90 mb-6 font-mono">
-            Feel free to <span style={{ color: theme.accent }}>connect</span>{" "}
-            with me
-          </p>
-          <div className="flex justify-center space-x-6">
-            {[
-              { icon: FaGithub, href: "https://github.com/michaelliav" },
-              {
-                icon: FaLinkedin,
-                href: "https://www.linkedin.com/in/michael-liav-a5484b220",
-              },
-              { icon: FaMedium, href: "https://medium.com/@immichaelliav" },
-            ].map((social, index) => (
-              <motion.a
-                key={index}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-3xl transition-colors"
-                style={{ color: "white" }}
-                whileHover={{
-                  scale: 1.2,
-                  rotate: [0, -10, 10, 0],
-                  color: theme.accent,
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                <social.icon />
-              </motion.a>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl font-display font-bold mb-12 text-center"
+          >
+            My <span style={{ color: theme.accent }}>Professional</span> Journey
+          </motion.h2>
+
+          <VerticalTimeline>
+            {experiences.map((experience, index) => (
+              <ExperienceCard
+                key={`experience-${index}`}
+                experience={experience}
+              />
             ))}
-          </div>
-        </motion.div>
+          </VerticalTimeline>
+        </div>
+        <style jsx global>{`
+          .vertical-timeline::before {
+            background: ${theme.accent};
+          }
+          .vertical-timeline-element-icon {
+            box-shadow: 0 0 0 4px ${theme.accent},
+              inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05);
+          }
+          @media (max-width: 767px) {
+            .vertical-timeline-element-date {
+              display: block !important;
+              float: none !important;
+              color: #fff;
+              margin-top: 0.5rem;
+              font-size: 0.8rem !important;
+            }
+          }
+        `}</style>
       </div>
     </div>
   );
 }
+
+const ExperienceCard = ({ experience }) => {
+  const { theme } = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  return (
+    <VerticalTimelineElement
+      contentStyle={{
+        background: "#110c13",
+        color: "#fff",
+        borderRadius: "12px",
+        padding: isMobile ? "1rem" : "1.5rem",
+      }}
+      contentArrowStyle={{
+        borderRight: `7px solid ${theme.accent}`,
+      }}
+      date={experience.date}
+      iconStyle={{ background: experience.iconBg }}
+      icon={
+        <div className="flex justify-center overflow-hidden items-center w-full h-full">
+          <Image
+            src={experience.icon || "/placeholder.svg"}
+            alt={experience.company_name}
+            width={1000}
+            height={1000}
+            className="w-[75%] h-[75%] object-contain"
+          />
+        </div>
+      }
+      lineColor={theme.accent}
+    >
+      <div>
+        <h3
+          className="text-[20px] md:text-[24px] leading-[1.2] font-display font-bold"
+          style={{ color: theme.accent }}
+        >
+          {experience.title}
+        </h3>
+      </div>
+
+      <ul className="mt-3 md:mt-5 list-disc ml-4 md:ml-5 space-y-1 md:space-y-2">
+        {experience.points.map((point, index) => (
+          <li
+            key={`experience-point-${index}`}
+            className="text-white/90 text-[12px] md:text-[14px] tracking-wider"
+            dangerouslySetInnerHTML={{ __html: point }}
+          ></li>
+        ))}
+      </ul>
+    </VerticalTimelineElement>
+  );
+};

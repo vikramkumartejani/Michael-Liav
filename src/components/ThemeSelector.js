@@ -9,48 +9,56 @@ const themes = [
     colors: ["#FF6B6B", "#4ECDC4", "#95A5A6", "#2C3E50"],
     gradient: "from-[#FF6B6B] via-[#4ECDC4] to-[#2C3E50]",
     accent: "#4ECDC4",
+    liquidGradient: "linear-gradient(to bottom right, #3b82f6, #10b981)",
   },
   {
     name: "Dark",
     colors: ["#FF6B6B", "#4ECDC4", "#666666", "#FFFFFF"],
     gradient: "from-[#1a1a1a] via-[#2d2d2d] to-[#333333]",
     accent: "#4ECDC4",
+    liquidGradient: "linear-gradient(to bottom right, #3b82f6, #10b981)",
   },
   {
     name: "Koopa Beach",
     colors: ["#FFA500", "#87CEEB", "#1E3A8A", "#0A1F44"],
     gradient: "from-[#87CEEB] via-[#1E3A8A] to-[#0A1F44]",
     accent: "#FFA500",
+    liquidGradient: "linear-gradient(to bottom right, #3b82f6, #10b981)",
   },
   {
     name: "Choco Mountain",
     colors: ["#D2691E", "#FFC0CB", "#2C1810", "#8B4513"],
     gradient: "from-[#8B4513] via-[#2C1810] to-[#D2691E]",
     accent: "#FFC0CB",
+    liquidGradient: "bg-gradient-to-br from-blue-400 to-green-400 ",
   },
   {
     name: "Moo Moo Farm",
     colors: ["#FFB6C1", "#98FB98", "#008080", "#000080"],
     gradient: "from-[#98FB98] via-[#008080] to-[#000080]",
     accent: "#FFB6C1",
+    liquidGradient: "linear-gradient(to bottom right, #3b82f6, #10b981)",
   },
   {
     name: "Bowser's Castle",
     colors: ["#800080", "#32CD32", "#808080", "#FFFFFF"],
     gradient: "from-[#800080] via-[#4B0082] to-[#2C0047]",
     accent: "#32CD32",
+    liquidGradient: "linear-gradient(to bottom right, #3b82f6, #10b981)",
   },
   {
     name: "Yoshi Valley",
     colors: ["#90EE90", "#FF4500", "#808080", "#2F4F4F"],
     gradient: "from-[#90EE90] via-[#32CD32] to-[#228B22]",
     accent: "#FF4500",
+    liquidGradient: "linear-gradient(to bottom right, #3b82f6, #10b981)",
   },
   {
     name: "Rainbow Road",
     colors: ["#00FFFF", "#00FF00", "#FF00FF", "#FF0000", "#FFFF00"],
     gradient: "from-[#FF0000] via-[#00FF00] to-[#0000FF]",
     accent: "#FFFF00",
+    liquidGradient: "linear-gradient(to bottom right, #3b82f6, #10b981)",
   },
 ];
 
@@ -64,7 +72,7 @@ export default function ThemeSelector({ currentTheme, onThemeChange }) {
       {/* Theme Toggle Button */}
       <motion.button
         onClick={toggleSelector}
-        className="absolute top-4 right-4 p-2 rounded-full bg-white shadow-lg hover:shadow-xl transition-shadow"
+        className="absolute top-6 right-16 md:top-6 md:right-4 p-2 rounded-full bg-white shadow-lg hover:shadow-xl transition-shadow"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >

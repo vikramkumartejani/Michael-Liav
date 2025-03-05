@@ -28,6 +28,7 @@ import { VscVscode } from "react-icons/vsc";
 // Liquid Card component for tools and skills
 const LiquidCard = ({ icon: Icon, name, index }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { theme } = useTheme();
 
   // Create unique animation patterns based on index
   const getAnimationPattern = (idx) => {
@@ -85,7 +86,17 @@ const LiquidCard = ({ icon: Icon, name, index }) => {
     >
       {/* Liquid Background with Gradient */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-blue-400 to-green-400 dark:from-blue-500 dark:to-green-500"
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: `linear-gradient(135deg, 
+            ${theme.accent}80 0%, 
+            ${theme.accent}40 50%,
+            ${theme.accent}90 100%
+          )`,
+          opacity: isHovered ? 0.9 : 0.8,
+          transition: "opacity 0.3s ease",
+        }}
         animate={{
           borderRadius: pattern,
         }}

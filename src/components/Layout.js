@@ -10,6 +10,40 @@ export default function Layout({ children }) {
   return (
     <div className="relative">
       <ThemeSelector currentTheme={theme} onThemeChange={changeTheme} />
+
+      {/* Liquid Background Gradient */}
+      <div
+        className="fixed inset-0 transition-opacity duration-1000"
+        style={{
+          background: `radial-gradient(circle at 50% 50%, 
+            ${theme.accent}20 0%, 
+            ${theme.background}60 25%, 
+            ${theme.background}90 50%, 
+            ${theme.background} 100%
+          )`,
+          opacity: 0.8,
+          zIndex: -1,
+        }}
+      />
+
+      {/* Animated Gradient Overlay */}
+      <div
+        className="fixed inset-0 transition-opacity duration-1000"
+        style={{
+          background: `linear-gradient(
+            45deg,
+            ${theme.accent}10 0%,
+            ${theme.background}30 25%,
+            ${theme.accent}20 50%,
+            ${theme.background}30 75%,
+            ${theme.accent}10 100%
+          )`,
+          opacity: 0.4,
+          zIndex: -1,
+          animation: "gradientShift 15s ease infinite",
+        }}
+      />
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -24,6 +58,18 @@ export default function Layout({ children }) {
         }`}
       >
         <style jsx global>{`
+          @keyframes gradientShift {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+          }
+
           :root {
             --theme-background: ${theme.background};
             --theme-text: ${theme.text};
@@ -33,64 +79,84 @@ export default function Layout({ children }) {
             --theme-nav-bg: ${theme.navBackground};
             --theme-card-bg: ${theme.cardBackground};
             --theme-border: ${theme.borderColor};
+            --theme-card-text: ${theme.cardText};
+            --theme-button-text: ${theme.buttonText};
+            --theme-icon-text: ${theme.iconText};
+            --theme-heading-text: ${theme.headingText};
+            --theme-paragraph-text: ${theme.paragraphText};
+            --theme-section-text: ${theme.sectionText};
           }
 
+          /* Reset all text colors to inherit from parent */
+          * {
+            color: inherit;
+          }
+
+          /* Base styles */
           body {
             background-color: var(--theme-background);
             color: var(--theme-text);
           }
 
-          .nav-link {
-            color: var(--theme-nav-text);
+          /* Only force black text on paragraphs in Classic theme */
+          ${theme.name === "Classic"
+            ? `
+            p:not(.vertical-timeline-element *), .paragraph:not(.vertical-timeline-element *), [class*="text-white"]:not(.vertical-timeline-element *), [class*="text-gray"]:not(.vertical-timeline-element *), [class*="text-slate"]:not(.vertical-timeline-element *) {
+              color: #2C3E50 !important;
+            }
+          `
+            : ""}
+
+          /* Force white text in timeline elements */
+          .vertical-timeline-element,
+          .vertical-timeline-element p,
+          .vertical-timeline-element span,
+          .vertical-timeline-element div {
+            color: #ffffff !important;
           }
 
-          .card {
-            background-color: var(--theme-card-bg);
-            border-color: var(--theme-border);
-          }
-
-          .accent-text {
-            color: var(--theme-accent);
-          }
-
-          .secondary-text {
-            color: var(--theme-text-secondary);
-          }
-
-          /* Global text color classes */
+          /* Keep theme colors for headings */
           h1,
           h2,
           h3,
           h4,
           h5,
           h6 {
-            color: var(--theme-text);
+            color: var(--theme-accent);
           }
 
-          p,
-          span,
-          div {
-            color: inherit;
+          /* Navigation */
+          .nav-link {
+            color: var(--theme-nav-text);
           }
 
-          /* Override any hardcoded text colors */
-          [class*="text-gray"],
-          [class*="text-slate"],
-          [class*="text-black"],
-          [class*="text-white"] {
-            color: inherit;
-          }
-
-          /* Ensure links use theme colors */
+          /* Links */
           a:not(.nav-link):not([class*="bg-"]) {
             color: var(--theme-accent);
           }
 
-          /* Card and section backgrounds */
-          .bg-white,
-          .bg-gray-50,
-          .bg-gray-100 {
+          /* Cards */
+          .card {
             background-color: var(--theme-card-bg);
+            border-color: var(--theme-border);
+          }
+
+          /* Accent text */
+          .accent-text {
+            color: var(--theme-accent);
+          }
+
+          /* Secondary text */
+          .secondary-text {
+            color: var(--theme-text-secondary);
+          }
+
+          /* Buttons with backgrounds should keep their text color */
+          [class*="bg-"].button,
+          [class*="bg-"].btn,
+          .button[class*="bg-"],
+          .btn[class*="bg-"] {
+            color: #ffffff;
           }
         `}</style>
         <Navbar />

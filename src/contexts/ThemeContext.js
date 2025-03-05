@@ -28,6 +28,9 @@ const themes = {
     navBackground: "#2d2d2d",
     cardBackground: "#2d2d2d",
     borderColor: "#404040",
+    cardText: "#FFFFFF",
+    buttonText: "#FFFFFF",
+    iconText: "#FFFFFF",
   },
   "Koopa Beach": {
     name: "Koopa Beach",
@@ -41,6 +44,9 @@ const themes = {
     navBackground: "#0A1F44",
     cardBackground: "#2563EB",
     borderColor: "#60A5FA",
+    cardText: "#FFFFFF",
+    buttonText: "#FFFFFF",
+    iconText: "#FFFFFF",
   },
   "Choco Mountain": {
     name: "Choco Mountain",
@@ -54,6 +60,9 @@ const themes = {
     navBackground: "#8B4513",
     cardBackground: "#3C2A20",
     borderColor: "#D2691E",
+    cardText: "#FFFFFF",
+    buttonText: "#FFFFFF",
+    iconText: "#FFFFFF",
   },
   "Moo Moo Farm": {
     name: "Moo Moo Farm",
@@ -67,6 +76,9 @@ const themes = {
     navBackground: "#000080",
     cardBackground: "#006666",
     borderColor: "#98FB98",
+    cardText: "#FFFFFF",
+    buttonText: "#FFFFFF",
+    iconText: "#FFFFFF",
   },
   "Bowser's Castle": {
     name: "Bowser's Castle",
@@ -80,6 +92,9 @@ const themes = {
     navBackground: "#2C0047",
     cardBackground: "#600080",
     borderColor: "#32CD32",
+    cardText: "#FFFFFF",
+    buttonText: "#FFFFFF",
+    iconText: "#FFFFFF",
   },
   "Yoshi Valley": {
     name: "Yoshi Valley",
@@ -93,6 +108,9 @@ const themes = {
     navBackground: "#2F4F4F",
     cardBackground: "#32CD32",
     borderColor: "#FF4500",
+    cardText: "#FFFFFF",
+    buttonText: "#FFFFFF",
+    iconText: "#FFFFFF",
   },
   "Rainbow Road": {
     name: "Rainbow Road",
@@ -106,6 +124,9 @@ const themes = {
     navBackground: "rgba(0, 0, 0, 0.8)",
     cardBackground: "rgba(0, 0, 0, 0.6)",
     borderColor: "#FF00FF",
+    cardText: "#FFFFFF",
+    buttonText: "#FFFFFF",
+    iconText: "#FFFFFF",
   },
 };
 
