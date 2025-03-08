@@ -24,57 +24,87 @@ export default function Home() {
 
   const experiences = [
     {
-      title: "Platform Engineering Tech Lead",
-      company_name: "Cloud-Native Solutions",
-      icon: "/icons/google.png", // You can add a specific icon if available
+      title: "Platform Tech Lead",
+      company_name: "Migdal Group",
+      icon: "/migdal.jpeg",
       iconBg: "#FFF",
-      date: "USA & EUROPE (2016-2023)",
+      date: "Mar 2024 - Present",
       points: [
-        "Led platform engineering initiatives focusing on <strong>Internal Developer Portals</strong> and <strong>Cloud-Native Technologies</strong>",
-        "Designed and implemented scalable infrastructure solutions using <strong>AWS, Kubernetes, and Docker</strong>",
-        "Developed automation strategies to enhance developer productivity and reduce operational overhead",
-        "Mentored engineering teams in DevOps practices and platform engineering methodologies",
-        "Contributed to open-source projects and spoke at tech conferences on platform engineering trends",
-        "Implemented <strong>Backstage.io</strong> for centralized developer workflows and improved internal tooling",
-        "Created comprehensive CI/CD pipelines using <strong>ArgoCD and Terraform</strong>",
-        "Reduced infrastructure deployment time by 60% through strategic automation",
+        "Assembled and led the dedicated platform team from inception, driving innovation and efficiency.",
+        "Redefined AWS landing zone architecture to enhance security, scalability, and performance.",
+        "Orchestrated the implementation of DevOps methodologies to optimize operational workflows.",
+        "Collaborated with cross-functional teams to improve infrastructure automation and cloud governance.",
+        "Designed and enforced best practices for CI/CD pipelines, monitoring, and cloud cost optimization.",
       ],
     },
     {
-      title: "Technical Writer & Community Mentor",
-      company_name: "Tech Community Engagement",
-      icon: "/icons/google.png", // You can add a specific icon if available
+      title: "DevOps Lead",
+      company_name: "Migdal Group",
+      icon: "/migdal.jpeg",
       iconBg: "#FFF",
-      date: "USA & EUROPE (2020-2023)",
+      date: "Mar 2023 - Mar 2024",
       points: [
-        "Authored technical articles on <strong>LinkedIn and Medium</strong> about platform engineering and cloud technologies",
-        "Provided mentorship to junior engineers, focusing on career development and technical skills",
-        "Delivered talks and workshops on <strong>DevOps, Platform Engineering, and Infrastructure Scalability</strong>",
-        "Built and maintained a professional network of technology professionals across multiple domains",
-        "Actively participated in technology communities and knowledge-sharing platforms",
-        "Created educational content reaching over <strong>50,000 tech professionals</strong>",
-        "Developed comprehensive guides on cloud-native architecture and microservices",
-        "Consulted with startups on building scalable technology infrastructure",
+        "Led the DevOps team, driving automation and operational excellence across cloud environments.",
+        "Implemented CI/CD pipelines to accelerate software deployment and ensure code quality.",
+        "Enhanced infrastructure security by applying best practices and compliance frameworks.",
+        "Optimized cloud resource allocation to reduce costs while maintaining performance.",
+        "Mentored junior engineers, fostering a culture of collaboration and continuous learning.",
       ],
     },
     {
-      title: "Software Development Specialist",
-      company_name: "Innovative Tech Solutions",
-      icon: "/icons/google.png", // You can add a specific icon if available
+      title: "DevOps Engineer",
+      company_name: "Migdal Group",
+      icon: "/migdal.jpeg",
       iconBg: "#FFF",
-      date: "USA & EUROPE (2014-2016)",
+      date: "Oct 2022 - Mar 2023",
       points: [
-        "Specialized in developing <strong>Python and JavaScript applications</strong>",
-        "Worked on complex web applications and backend systems",
-        "Implemented microservices architecture using modern frameworks",
-        "Collaborated with cross-functional teams to deliver high-performance software solutions",
-        "Developed machine learning pipelines and data processing systems",
-        "Integrated advanced security protocols in software development",
-        "Optimized application performance and reduced resource consumption",
-        "Conducted code reviews and mentored junior developers in best practices",
+        "Developed and maintained cloud-based infrastructure for high availability and scalability.",
+        "Automated deployment processes using Terraform, Kubernetes, and CI/CD pipelines.",
+        "Monitored system health and performance, proactively resolving incidents and issues.",
+        "Collaborated with development teams to improve DevOps practices and code deployment strategies.",
+      ],
+    },
+    {
+      title: "DevOps Engineer",
+      company_name: "Teva Pharmaceuticals",
+      icon: "/teva.jpeg",
+      iconBg: "#FFF",
+      date: "June 2022 - Oct 2022",
+      points: [
+        "Managed Microsoft-based cloud environments, ensuring security, availability, and compliance.",
+        "Led seamless migrations of enterprise applications to the cloud with minimal downtime.",
+        "Administered and optimized enterprise-level infrastructure for performance and cost-efficiency.",
+        "Developed automation scripts to streamline system administration and monitoring tasks.",
+      ],
+    },
+    {
+      title: "Business Owner",
+      company_name: "MCL",
+      icon: "/MCL.jpeg",
+      iconBg: "#FFF",
+      date: "Sep 2020 - Aug 2022",
+      points: [
+        "Founded and managed a successful business, overseeing all operational aspects.",
+        "Developed business strategies to drive growth, improve profitability, and expand market reach.",
+        "Led a team, managing recruitment, training, and day-to-day operations.",
+        "Implemented digital transformation initiatives to optimize processes and customer engagement.",
+      ],
+    },
+    {
+      title: "DevOps Engineer",
+      company_name: "Israel Defense Forces",
+      icon: "/idf.jpeg",
+      iconBg: "#FFF",
+      date: "Mar 2018 - Sep 2019",
+      points: [
+        "Designed and maintained mission-critical infrastructure for secure and reliable operations.",
+        "Implemented automation tools to enhance deployment efficiency and system monitoring.",
+        "Worked closely with security teams to ensure compliance with military-grade cybersecurity standards.",
+        "Optimized server performance and network reliability for large-scale operations.",
       ],
     },
   ];
+
   return (
     <div className="min-h-screen">
       {/* Animated background particles */}
@@ -343,16 +373,25 @@ const ExperienceCard = ({ experience }) => {
       contentArrowStyle={{
         borderRight: `7px solid ${theme.accent}`,
       }}
-      date={experience.date}
+      date={
+        <span
+          style={{
+            color: theme.name === "Classic" ? "black" : "inherit",
+            WebkitTextFillColor: theme.name === "Classic" ? "black" : "inherit", // Extra override
+          }}
+        >
+          {experience.date}
+        </span>
+      }
       iconStyle={{ background: experience.iconBg }}
       icon={
-        <div className="flex justify-center overflow-hidden items-center w-full h-full">
+        <div className="flex justify-center items-center w-full h-full rounded-full">
           <Image
             src={experience.icon || "/placeholder.svg"}
             alt={experience.company_name}
-            width={1000}
-            height={1000}
-            className="w-[75%] h-[75%] object-contain"
+            width={100}
+            height={100}
+            className="w-full h-full object-cover rounded-full"
           />
         </div>
       }
@@ -368,7 +407,7 @@ const ExperienceCard = ({ experience }) => {
       </div>
 
       <ul className="mt-3 md:mt-5 list-disc ml-4 md:ml-5 space-y-1 md:space-y-2">
-        {experience.points.map((point, index) => (
+        {experience?.points?.map((point, index) => (
           <li
             key={`experience-point-${index}`}
             className="text-white/90 text-[12px] md:text-[14px] tracking-wider"
