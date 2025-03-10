@@ -287,7 +287,21 @@ export default function About() {
                   .
                 </motion.p>
 
-                <motion.div className="bg-secondary/30 dark:bg-lightSecondary/50 p-6 rounded-xl">
+                <motion.div
+                  style={{
+                    backgroundColor:
+                      theme.name === "Classic"
+                        ? `rgba(30, 80, 70, 0.8)`
+                        : `rgba(${parseInt(
+                            theme.accent.slice(1, 3),
+                            16
+                          )}, ${parseInt(
+                            theme.accent.slice(3, 5),
+                            16
+                          )}, ${parseInt(theme.accent.slice(5, 7), 16)}, 0.3)`,
+                  }}
+                  className=" dark:bg-lightSecondary/50 p-6 rounded-xl"
+                >
                   <h3 className="text-xl font-semibold mb-4 flex items-center">
                     <span className="text-2xl mr-2">🚀</span>
                     Beyond Engineering
@@ -453,7 +467,16 @@ export default function About() {
             variants={containerVariants}
             initial="hidden"
             animate={isVisible["connect-section"] ? "visible" : "hidden"}
-            className="bg-secondary/30 dark:bg-lightSecondary/50 rounded-2xl p-8 sm:p-12 text-center"
+            style={{
+              backgroundColor:
+                theme.name === "Classic"
+                  ? `rgba(30, 80, 70, 0.6)`
+                  : `rgba(${parseInt(theme.accent.slice(1, 3), 16)}, ${parseInt(
+                      theme.accent.slice(3, 5),
+                      16
+                    )}, ${parseInt(theme.accent.slice(5, 7), 16)}, 0.3)`,
+            }}
+            className=" rounded-2xl p-8 sm:p-12 text-center"
           >
             <motion.h2
               variants={itemVariants}
@@ -462,12 +485,12 @@ export default function About() {
             >
               Let's Connect
             </motion.h2>
-            <motion.p
+            <motion.div
               variants={itemVariants}
-              className="text-textSecondary dark:text-lightTextSecondary max-w-2xl mx-auto mb-8"
+              className="text-white max-w-2xl mx-auto mb-8"
             >
               Feel free to reach out for collaborations or just a friendly chat
-            </motion.p>
+            </motion.div>
 
             <motion.div
               variants={itemVariants}
